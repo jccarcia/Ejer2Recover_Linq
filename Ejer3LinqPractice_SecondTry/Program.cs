@@ -70,5 +70,112 @@ namespace Ejer3LinqPractice_SecondTry
             }
 
         }
+
+        static void Ejer6() //Muestra todos los coches del año posterior de 2001.
+        {
+            var edad = listaCoche.Where(x => x.Year >= 2001);
+            foreach (var i in edad)
+            {
+                Console.WriteLine(i.Maker + " - " + i.Model);
+            }
+        }
+
+        static void Ejer7() //Genera una nueva clase con modelo y fabricante. Muestra todos los coches que tengan latitud, ni longitud Convierte en la búsqueda a esa clase.
+        {
+            //No la entiendo
+        }
+
+        static void Ejer8() //Busca todos los coches de color Blue y que sean anteriores al año 2000.
+        {
+            var e = listaCoche.Where(x => x.Year >= 2000 && x.Color == "Blue");
+            foreach (var i in e)
+            {
+                Console.WriteLine(i);
+            }
+        }
+
+        static void Ejer9() //Agrupa todos los coches por fabricante, muestralos por pantalla ordenados por año.
+        {
+            var rav = listaCoche.Select(x => new {Annio = x.Year, Fabricante = x.Maker} ).GroupBy(x => x.Fabricante).OrderBy(x => x.A)
+            foreach (var i in rav)
+            {
+                Console.WriteLine(i.Key);
+            }
+        }
+
+        static void Ejer10() //Agrupa todos los coches por modelo, muestra los colores disponibles sin duplicar la muestra.
+        {
+            var fabcolor = listaCoche.GroupBy(x => x.Model).Select(y => y.First());
+            foreach (var i in fabcolor)
+            {
+                Console.WriteLine(i.Maker + " - " + i.Color);
+            }
+        }
+
+        static void Ejer11() //Página de 10 en 10 pulsando una tecla y muestra todos los coches disponibles
+        {
+            for (int i = 0; i < listaCoche.Count; i += 10)
+            {
+                var lista = listaCoche.Skip(0 + i).Take(10).Select(y => y.id);
+                foreach (var x in lista)
+                {
+                    Console.WriteLine(x);
+                }
+                Console.ReadKey();
+
+            }
+        }
+
+        static void Ejer12() //Encuentra el primer coche posterior del año 2001 del fabricante Suzuki
+        {
+            var suzu = listaCoche.Where(x => x.Maker == "Suzuki" && x.Year > 2001).Take(1);
+            foreach (var i in suzu)
+            {
+                Console.WriteLine(i);
+            }
+        }
+
+        static void Ejer13() //Muestra todos los coches que tengan guardado el año.
+        {
+            var ok = listaCoche.Where(x => IsNullOrEmpty(x.Year));
+            foreach (var i in ok)
+            {
+                Console.WriteLine(i);
+            }
+        }
+
+        static void Ejer14() //Agrupa por año todos los coches y muestra la cantidad que hay de color Rosa
+        {
+            var col = listaCoche.Where(x => x.Color == "Pink").GroupBy(y => y.Year);
+            foreach (var i in col)
+            {
+                Console.WriteLine(i);
+            }
+        }
+
+        static void Ejer15() //Busca todos los coches BMW que no tengan ni año, ni color.
+        {
+            var bar = listaCoche.Where(x => x.Maker == "Hyundai" && string.IsNullOrEmpty(x.Year) && string.IsNullOrEmpty(x.Color));
+            foreach (var i in bar)
+            {
+                Console.WriteLine(i);
+            }
+        }
+
+        static void Ejer16() //Crea un método de extensión donde se pueda introducir color y año, devolviendo el listado de Coches que no cumplan la condición.
+        {
+        }
+
+        public static class ExtensionMethods
+        {
+            public static void listVehiculos<T>(string color, int? ano)
+            {
+                var lv = listaCoche.Where(x => x.Year != ano && x.Color != color);
+                foreach (var i in lv)
+                {
+                    Console.WriteLine(i);
+                }
+            }
+        }
     }
 }
